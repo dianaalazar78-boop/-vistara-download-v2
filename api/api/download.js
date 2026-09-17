@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Only POST requests are allowed" });
   }
@@ -14,4 +14,4 @@ export default function handler(req, res) {
     message: "URL received successfully",
     url: url
   });
-}
+};
