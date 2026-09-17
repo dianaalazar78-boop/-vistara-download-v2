@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Vistara Download</title>
 
   <style>
@@ -13,10 +12,9 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top, #292929 0%, #111 45%, #070707 100%);
-      color: #fff;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
       min-height: 100vh;
     }
 
@@ -26,76 +24,45 @@
     }
 
     .logo {
-      width: 62px;
-      height: 62px;
+      width: 64px;
+      height: 64px;
       margin: 0 auto 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 20px;
-      background: linear-gradient(135deg, #fff, #cfcfcf);
+      background: white;
       color: #111;
       font-size: 28px;
-      font-weight: 800;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-    }
-
-    .logo:hover {
-      transform: translateY(-4px) rotate(-3deg);
-      box-shadow: 0 20px 45px rgba(255, 255, 255, 0.12);
+      font-weight: bold;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(36px, 9vw, 54px);
-      letter-spacing: -2px;
+      font-size: 48px;
     }
 
     header p {
-      margin: 12px 0 0;
       color: #999;
-      font-size: 16px;
     }
 
     .container {
-      width: min(720px, calc(100% - 30px));
-      margin: 10px auto 50px;
+      width: min(700px, calc(100% - 30px));
+      margin: auto;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 28px;
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 25px;
       padding: 30px;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
-
-      animation: cardIn 0.6s ease;
     }
 
-    @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
+    h2 {
+      margin-top: 0;
     }
 
     .subtitle {
-      margin: 0 0 25px;
       color: #999;
       font-size: 14px;
     }
@@ -103,137 +70,105 @@
     input {
       width: 100%;
       padding: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      background: rgba(0, 0, 0, 0.35);
+      margin-top: 15px;
+      border-radius: 14px;
+      border: 1px solid #333;
+      background: #090909;
       color: white;
       font-size: 16px;
       outline: none;
-
-      transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.2s ease;
-    }
-
-    input::placeholder {
-      color: #777;
     }
 
     input:focus {
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
-      transform: translateY(-1px);
+      border-color: white;
     }
 
     button {
       width: 100%;
       margin-top: 13px;
-      padding: 18px 25px;
+      padding: 18px;
       border: none;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #fff, #d5d5d5);
+      border-radius: 14px;
+      background: white;
       color: #111;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: bold;
       cursor: pointer;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease;
+      transition: 0.2s;
     }
 
     button:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 15px 32px rgba(255, 255, 255, 0.15);
-      filter: brightness(1.04);
+      transform: translateY(-2px);
     }
 
     button:active {
-      transform: translateY(1px) scale(0.97);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+      transform: scale(0.97);
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #202020;
+      border: 1px solid #333;
+    }
+
+    #result h3 {
+      margin-top: 0;
+    }
+
+    .download-button {
+      background: #35d07f;
+      color: #07130c;
     }
 
     .platforms {
-      margin-top: 32px;
-    }
-
-    .platform-title {
-      margin-bottom: 14px;
-      font-weight: 700;
+      margin-top: 30px;
     }
 
     .platform-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      margin-top: 15px;
     }
 
     .platform {
-      padding: 14px 10px;
+      padding: 13px 8px;
       text-align: center;
-      border-radius: 13px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #bbb;
+      border-radius: 12px;
+      background: #202020;
+      color: #aaa;
       font-size: 13px;
-      cursor: default;
-
-      transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-    }
-
-    .platform:hover {
-      transform: translateY(-4px) scale(1.02);
-      background: rgba(255, 255, 255, 0.11);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-
-    .platform:active {
-      transform: scale(0.95);
     }
 
     .note {
-      margin: 25px 0 0;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 25px;
       color: #777;
       font-size: 12px;
-      line-height: 1.6;
       text-align: center;
+      line-height: 1.5;
     }
 
     footer {
       text-align: center;
       color: #555;
       font-size: 12px;
-      padding: 0 20px 30px;
+      padding: 30px;
     }
 
     @media (max-width: 520px) {
-      header {
-        padding-top: 38px;
+      h1 {
+        font-size: 40px;
       }
 
       .card {
         padding: 22px;
-        border-radius: 23px;
       }
 
       .platform-grid {
         grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
       }
     }
   </style>
@@ -241,117 +176,116 @@
 
 <body>
 
-  <header>
-    <div class="logo">V</div>
+<header>
+  <div class="logo">V</div>
+  <h1>Vistara</h1>
+  <p>Simple. Fast. Beautiful.</p>
+</header>
 
-    <h1>Vistara</h1>
+<main class="container">
 
-    <p>Simple. Fast. Beautiful.</p>
-  </header>
+  <section class="card">
 
+    <h2>Download Media</h2>
 
-  <main class="container">
+    <p class="subtitle">
+      Paste a supported media link below.
+    </p>
 
-    <section class="card">
+    <input
+      type="url"
+      id="mediaUrl"
+      placeholder="Paste your media link here..."
+    >
 
-      <h2>Download Media</h2>
+    <button onclick="getMedia()">
+      Get Media
+    </button>
 
-      <p class="subtitle">
-        Paste a supported media link below to get started.
-      </p>
+    <div id="result">
+      <h3 id="resultTitle"></h3>
+      <p id="resultMessage"></p>
 
-
-      <input
-        type="url"
-        id="mediaUrl"
-        placeholder="Paste your media link here..."
-        aria-label="Media URL"
-      >
-
-
-      <button onclick="getMedia()">
-        Get Media
+      <button class="download-button" onclick="downloadMedia()">
+        Download Media
       </button>
+    </div>
 
+    <div class="platforms">
+      <strong>Supported platforms</strong>
 
-      <div class="platforms">
-
-        <div class="platform-title">
-          Supported platforms
-        </div>
-
-        <div class="platform-grid">
-
-          <div class="platform">Facebook</div>
-          <div class="platform">TikTok</div>
-          <div class="platform">Instagram</div>
-          <div class="platform">RedNote</div>
-          <div class="platform">Snapchat</div>
-          <div class="platform">X</div>
-
-        </div>
-
+      <div class="platform-grid">
+        <div class="platform">Facebook</div>
+        <div class="platform">TikTok</div>
+        <div class="platform">Instagram</div>
+        <div class="platform">RedNote</div>
+        <div class="platform">Snapchat</div>
+        <div class="platform">X</div>
       </div>
+    </div>
 
+    <p class="note">
+      Only download media you have permission to use.
+    </p>
 
-      <p class="note">
-        Videos • Reels • Stories • Photos<br>
-        Availability depends on the platform and content.
-        Only process media you are authorized to download.
-      </p>
+  </section>
 
-    </section>
+</main>
 
-  </main>
+<footer>
+  © 2026 Vistara Download
+</footer>
 
+<script>
+  let currentUrl = "";
 
-  <footer>
-    © 2026 Vistara Download
-  </footer>
+  async function getMedia() {
+    const input = document.getElementById("mediaUrl");
+    const url = input.value.trim();
 
+    if (!url) {
+      alert("Please paste a media link first.");
+      return;
+    }
 
-  <script>
-    async function getMedia() {
+    try {
+      const response = await fetch("/api/download", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url: url })
+      });
 
-      const input = document.getElementById("mediaUrl");
-      const url = input.value.trim();
+      const data = await response.json();
 
-      if (!url) {
-        alert("Please paste a media link first.");
+      if (!response.ok) {
+        alert(data.error || "Something went wrong.");
         return;
       }
 
-      try {
+      currentUrl = data.url;
 
-        const response = await fetch("/api/download", {
-          method: "POST",
+      document.getElementById("resultTitle").textContent =
+        data.platform + " detected ✓";
 
-          headers: {
-            "Content-Type": "application/json"
-          },
+      document.getElementById("resultMessage").textContent =
+        data.message;
 
-          body: JSON.stringify({
-            url: url
-          })
-        });
+      document.getElementById("result").style.display = "block";
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          alert(data.error || "Something went wrong.");
-          return;
-        }
-
-        alert(data.message || "URL received successfully!");
-
-      } catch (error) {
-
-        alert("Could not connect to the server.");
-
-      }
-
+    } catch (error) {
+      alert("Could not connect to the server.");
     }
-  </script>
+  }
+
+  function downloadMedia() {
+    alert(
+      "The media download service is not connected yet. " +
+      "The link has been successfully detected."
+    );
+  }
+</script>
 
 </body>
 </html>
