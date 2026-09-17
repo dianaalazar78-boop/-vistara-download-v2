@@ -81,7 +81,7 @@
 
     <br>
 
-    <button>Get Media</button>
+   <button onclick="getMedia()">
 
     <div class="platforms">
       <strong>Supported platforms</strong><br>
@@ -93,6 +93,32 @@
       Videos • Reels • Stories • Photos • High quality where available
     </p>
   </main>
+<script>
+async function getMedia() {
+  const input = document.querySelector('input[type="url"]');
+  const url = input.value.trim();
 
+  if (!url) {
+    alert("Please enter a link first.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/download", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url: url })
+    });
+
+    const data = await response.json();
+
+    alert(data.message || "Link received successfully!");
+  } catch (error) {
+    alert("Could not connect to the server.");
+  }
+}
+</script>
 </body>
 </html>
