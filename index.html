@@ -6,9 +6,7 @@
   <title>Vistara Download</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -58,9 +56,7 @@
       padding: 30px;
     }
 
-    h2 {
-      margin-top: 0;
-    }
+    h2 { margin-top: 0; }
 
     .subtitle {
       color: #999;
@@ -79,10 +75,6 @@
       outline: none;
     }
 
-    input:focus {
-      border-color: white;
-    }
-
     button {
       width: 100%;
       margin-top: 13px;
@@ -94,15 +86,6 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-    }
-
-    button:active {
-      transform: scale(0.97);
     }
 
     #result {
@@ -114,13 +97,20 @@
       border: 1px solid #333;
     }
 
-    #result h3 {
-      margin-top: 0;
-    }
-
     .download-button {
       background: #35d07f;
       color: #07130c;
+    }
+
+    .media-link {
+      display: block;
+      margin-top: 12px;
+      padding: 14px;
+      background: #111;
+      border-radius: 10px;
+      color: #35d07f;
+      text-decoration: none;
+      text-align: center;
     }
 
     .platforms {
@@ -159,17 +149,9 @@
     }
 
     @media (max-width: 520px) {
-      h1 {
-        font-size: 40px;
-      }
-
-      .card {
-        padding: 22px;
-      }
-
-      .platform-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      h1 { font-size: 40px; }
+      .card { padding: 22px; }
+      .platform-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -189,7 +171,7 @@
     <h2>Download Media</h2>
 
     <p class="subtitle">
-      Paste a supported media link below.
+      Paste a supported public media link below.
     </p>
 
     <input
@@ -205,10 +187,7 @@
     <div id="result">
       <h3 id="resultTitle"></h3>
       <p id="resultMessage"></p>
-
-      <button class="download-button" onclick="downloadMedia()">
-        Download Media
-      </button>
+      <div id="mediaLinks"></div>
     </div>
 
     <div class="platforms">
@@ -237,8 +216,6 @@
 </footer>
 
 <script>
-  let currentUrl = "";
-
   async function getMedia() {
     const input = document.getElementById("mediaUrl");
     const url = input.value.trim();
@@ -247,6 +224,16 @@
       alert("Please paste a media link first.");
       return;
     }
+
+    const result = document.getElementById("result");
+    const title = document.getElementById("resultTitle");
+    const message = document.getElementById("resultMessage");
+    const links = document.getElementById("mediaLinks");
+
+    result.style.display = "block";
+    title.textContent = "Processing...";
+    message.textContent = "Getting available media...";
+    links.innerHTML = "";
 
     try {
       const response = await fetch("/api/download", {
@@ -260,30 +247,40 @@
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.error || "Something went wrong.");
+        title.textContent = "Download unavailable";
+        message.textContent = data.error || "Something went wrong.";
         return;
       }
 
-      currentUrl = data.url;
+      title.textContent =
+        (data.platform || "Media") + " detected ✓";
 
-      document.getElementById("resultTitle").textContent =
-        data.platform + " detected ✓";
+      message.textContent =
+        "Media is ready.";
 
-      document.getElementById("resultMessage").textContent =
-        data.message;
+      if (data.medias && data.medias.length > 0) {
+        data.medias.forEach((media, index) => {
+          const link = document.createElement("a");
 
-      document.getElementById("result").style.display = "block";
+          link.className = "media-link";
+          link.href = media.url;
+          link.target = "_blank";
+          link.rel = "noopener";
+          link.textContent =
+            "Download " + (media.quality || media.type || ("Media " + (index + 1)));
+
+          links.appendChild(link);
+        });
+      } else {
+        message.textContent =
+          "No downloadable media was returned.";
+      }
 
     } catch (error) {
-      alert("Could not connect to the server.");
+      title.textContent = "Connection error";
+      message.textContent =
+        "Could not connect to the download service.";
     }
-  }
-
-  function downloadMedia() {
-    alert(
-      "The media download service is not connected yet. " +
-      "The link has been successfully detected."
-    );
   }
 </script>
 
