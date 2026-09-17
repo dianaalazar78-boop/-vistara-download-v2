@@ -15,41 +15,40 @@ export default async function handler(req, res) {
 
   try {
     const parsedUrl = new URL(url);
-
-    const supportedHosts = [
-      "facebook.com",
-      "www.facebook.com",
-      "tiktok.com",
-      "www.tiktok.com",
-      "instagram.com",
-      "www.instagram.com",
-      "x.com",
-      "twitter.com",
-      "xiaohongshu.com",
-      "www.xiaohongshu.com"
-    ];
-
     const hostname = parsedUrl.hostname.toLowerCase();
 
-    const supported = supportedHosts.some(
-      host => hostname === host || hostname.endsWith("." + host)
-    );
+    let platform = "Unknown";
 
-    if (!supported) {
+    if (hostname.includes("tiktok.com")) {
+      platform = "TikTok";
+    } else if (hostname.includes("instagram.com")) {
+      platform = "Instagram";
+    } else if (hostname.includes("facebook.com") || hostname.includes("fb.watch")) {
+      platform = "Facebook";
+    } else if (
+      hostname === "x.com" ||
+      hostname.endsWith(".x.com") ||
+      hostname.includes("twitter.com")
+    ) {
+      platform = "X";
+    } else if (hostname.includes("xiaohongshu.com")) {
+      platform = "RedNote";
+    } else {
       return res.status(400).json({
-        error: "This platform is not supported."
+        error: "This platform is not supported yet."
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Link accepted. Media processing is ready to be connected.",
-      url
+      platform: platform,
+      message: `${platform} link detected successfully.`,
+      url: url
     });
 
   } catch {
     return res.status(400).json({
-      error: "Please enter a valid media URL."
+      error: "Please enter a valid URL."
     });
   }
 }
