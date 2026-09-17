@@ -14,41 +14,32 @@ export default async function handler(req, res) {
   }
 
   try {
-    const parsedUrl = new URL(url);
-    const hostname = parsedUrl.hostname.toLowerCase();
+    const apiUrl =
+      "https://api.saveapi.org/v1/download?url=" +
+      encodeURIComponent(url);
 
-    let platform = "Unknown";
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${process.env.SAVEAPI_KEY}`
+      }
+    });
 
-    if (hostname.includes("tiktok.com")) {
-      platform = "TikTok";
-    } else if (hostname.includes("instagram.com")) {
-      platform = "Instagram";
-    } else if (hostname.includes("facebook.com") || hostname.includes("fb.watch")) {
-      platform = "Facebook";
-    } else if (
-      hostname === "x.com" ||
-      hostname.endsWith(".x.com") ||
-      hostname.includes("twitter.com")
-    ) {
-      platform = "X";
-    } else if (hostname.includes("xiaohongshu.com")) {
-      platform = "RedNote";
-    } else {
-      return res.status(400).json({
-        error: "This platform is not supported yet."
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      return res.status(response.status || 500).json({
+        error:
+          data?.error?.message ||
+          "The media could not be retrieved."
       });
     }
 
-    return res.status(200).json({
-      success: true,
-      platform: platform,
-      message: `${platform} link detected successfully.`,
-      url: url
-    });
+    return res.status(200).json(data);
 
-  } catch {
-    return res.status(400).json({
-      error: "Please enter a valid URL."
+  } catch (error) {
+    return res.status(500).json({
+      error: "Could not connect to the media service."
     });
   }
 }
