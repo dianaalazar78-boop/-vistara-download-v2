@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Vistara Download</title>
 
   <style>
@@ -11,148 +10,362 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: white;
-      background:
-        radial-gradient(circle at 15% 10%, #4b176f 0, transparent 30%),
-        radial-gradient(circle at 85% 20%, #123f76 0, transparent 30%),
-        #07070b;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
+      background: #07070b;
+      overflow-x: hidden;
     }
 
+    /* Animated background */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .35;
+      pointer-events: none;
+      z-index: -1;
+      animation: float 9s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      background: #7c3cff;
+      top: -180px;
+      left: -120px;
+    }
+
+    body::after {
+      background: #00cfff;
+      right: -150px;
+      bottom: -180px;
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(45px, 30px) scale(1.15);
+      }
+    }
+
+    /* Header */
     header {
       text-align: center;
-      padding: 55px 20px 25px;
+      padding: 45px 20px 15px;
     }
 
     .logo {
-      width: 70px;
-      height: 70px;
+      width: 72px;
+      height: 72px;
       margin: auto;
-      border-radius: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 23px;
+
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(18px);
+
       font-size: 32px;
       font-weight: bold;
-      background: linear-gradient(135deg, #ffffff, #b8a7ff);
-      color: #111;
-      box-shadow: 0 0 35px rgba(150, 100, 255, .45);
+
+      box-shadow:
+        0 0 35px rgba(124,60,255,.35),
+        inset 0 1px rgba(255,255,255,.25);
+
+      animation: logoFloat 3s ease-in-out infinite;
     }
 
-    h1 {
-      margin: 20px 0 8px;
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    header h1 {
+      margin: 18px 0 5px;
       font-size: 48px;
       letter-spacing: -2px;
     }
 
     header p {
       margin: 0;
-      color: #aaa;
-      font-size: 16px;
+      color: #999;
     }
 
+    /* Hero */
     .hero {
       text-align: center;
-      padding: 25px 20px 35px;
+      padding: 35px 20px 30px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      margin-bottom: 18px;
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+
+      color: #bbb;
+      font-size: 12px;
+
+      backdrop-filter: blur(15px);
     }
 
     .hero h2 {
       margin: 0;
-      font-size: 34px;
+      font-size: clamp(32px, 7vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -2px;
     }
 
-    .hero span {
-      background: linear-gradient(90deg, #ff4fd8, #8d6bff, #36d9ff);
+    .gradient-text {
+      background: linear-gradient(
+        90deg,
+        #ff4fd8,
+        #8d6bff,
+        #36d9ff,
+        #ff4fd8
+      );
+
+      background-size: 300% auto;
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
+
+      animation: gradientMove 5s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      to {
+        background-position: 300% center;
+      }
     }
 
     .hero p {
+      max-width: 600px;
+      margin: 18px auto 0;
       color: #999;
-      max-width: 550px;
-      margin: 15px auto;
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 15px;
     }
 
+    /* Main card */
     .container {
       width: min(720px, calc(100% - 30px));
       margin: auto;
     }
 
-    .card {
-      padding: 28px;
-      border-radius: 28px;
-      background: rgba(20, 20, 28, .88);
-      border: 1px solid #343443;
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    .glass-card {
+      padding: 30px;
+      border-radius: 30px;
+
+      background: rgba(255,255,255,.065);
+      border: 1px solid rgba(255,255,255,.13);
+
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.12);
+
+      animation: cardAppear .7s ease-out;
     }
 
-    .card h3 {
-      margin-top: 0;
+    @keyframes cardAppear {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .glass-card h3 {
+      margin: 0 0 8px;
       font-size: 22px;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Input */
+    .input-wrap {
+      padding: 1px;
+      border-radius: 17px;
+
+      background: linear-gradient(
+        120deg,
+        rgba(255,255,255,.2),
+        rgba(124,60,255,.5),
+        rgba(0,207,255,.35),
+        rgba(255,255,255,.1)
+      );
     }
 
     input {
       width: 100%;
+      display: block;
+
       padding: 18px;
-      border-radius: 15px;
-      border: 1px solid #3a3a48;
-      background: #0c0c12;
-      color: white;
-      font-size: 16px;
+      border: 0;
+      border-radius: 16px;
+
       outline: none;
+      background: #0d0d13;
+      color: white;
+
+      font-size: 16px;
     }
 
-    input:focus {
-      border-color: #9b7cff;
-      box-shadow: 0 0 20px rgba(155,124,255,.18);
+    input::placeholder {
+      color: #666;
     }
 
-    button {
+    /* Main button */
+    .main-button {
+      position: relative;
+      overflow: hidden;
+
       width: 100%;
       margin-top: 13px;
       padding: 18px;
-      border: none;
-      border-radius: 15px;
-      background: linear-gradient(90deg, #ff4fd8, #806cff);
+
+      border: 0;
+      border-radius: 16px;
+
       color: white;
       font-size: 16px;
       font-weight: bold;
+
+      background: linear-gradient(
+        100deg,
+        #ff4fd8,
+        #806cff,
+        #36d9ff
+      );
+
+      background-size: 200% auto;
+
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(128,108,255,.25);
+
+      box-shadow:
+        0 12px 35px rgba(128,108,255,.28);
+
+      transition: transform .2s, box-shadow .2s;
+      animation: buttonGlow 4s linear infinite;
     }
 
+    .main-button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 45px rgba(128,108,255,.4);
+    }
+
+    .main-button:active {
+      transform: scale(.98);
+    }
+
+    @keyframes buttonGlow {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* Result */
     #result {
       display: none;
+
       margin-top: 20px;
       padding: 20px;
-      border-radius: 17px;
-      background: #111119;
-      border: 1px solid #343443;
+
+      border-radius: 20px;
+
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.1);
+
+      animation: resultAppear .4s ease-out;
+    }
+
+    @keyframes resultAppear {
+      from {
+        opacity: 0;
+        transform: scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     #result h3 {
       margin-top: 0;
     }
 
+    #resultMessage {
+      color: #999;
+    }
+
     .media-link {
       display: block;
       margin-top: 12px;
       padding: 15px;
-      border-radius: 13px;
+
+      border-radius: 14px;
+
       text-align: center;
       text-decoration: none;
-      background: #171721;
-      color: #5ee7ff;
-      border: 1px solid #353548;
+
+      color: white;
       font-weight: bold;
+
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+
+      transition: .2s;
     }
 
+    .media-link:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.13);
+    }
+
+    /* Platforms */
     .platforms {
-      margin-top: 30px;
+      margin-top: 32px;
+    }
+
+    .platform-title {
+      color: #bbb;
+      font-size: 14px;
     }
 
     .platform-grid {
@@ -164,46 +377,52 @@
 
     .platform {
       padding: 14px 8px;
+      border-radius: 14px;
+
       text-align: center;
-      border-radius: 13px;
-      background: #15151e;
+
       color: #aaa;
-      border: 1px solid #292936;
-      font-size: 13px;
+
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+
+      transition: .25s;
+    }
+
+    .platform:hover {
+      color: white;
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.2);
     }
 
     .tagline {
+      margin: 28px 0 5px;
       text-align: center;
-      margin: 35px 0 10px;
       color: #777;
       font-size: 13px;
     }
 
     .note {
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-      line-height: 1.5;
       margin-top: 20px;
+      text-align: center;
+      color: #555;
+      font-size: 11px;
+      line-height: 1.5;
     }
 
     footer {
+      padding: 40px 20px;
       text-align: center;
-      color: #555;
+      color: #444;
       font-size: 12px;
-      padding: 35px 20px;
     }
 
     @media (max-width: 520px) {
-      h1 {
+      header h1 {
         font-size: 40px;
       }
 
-      .hero h2 {
-        font-size: 27px;
-      }
-
-      .card {
+      .glass-card {
         padding: 22px;
       }
 
@@ -218,61 +437,91 @@
 
 <header>
   <div class="logo">V</div>
+
   <h1>Vistara</h1>
+
   <p>Download the moments you love.</p>
 </header>
 
 <section class="hero">
-  <h2>Download. <span>Dance.</span> Share.</h2>
+
+  <div class="badge">
+    ✨ Made for creators &amp; social media
+  </div>
+
+  <h2>
+    Download.
+    <span class="gradient-text">Create.</span>
+    Share.
+  </h2>
+
   <p>
     Turn your favorite public social-media moments into downloadable media.
+    Simple, beautiful and fast.
   </p>
+
 </section>
 
 <main class="container">
 
-  <section class="card">
+  <section class="glass-card">
 
     <h3>🎬 Get your media</h3>
 
-    <input
-      type="url"
-      id="mediaUrl"
-      placeholder="Paste your video or post link..."
-    >
+    <p class="subtitle">
+      Paste a public video or post link below.
+    </p>
 
-    <button onclick="getMedia()">
+    <div class="input-wrap">
+      <input
+        type="url"
+        id="mediaUrl"
+        placeholder="Paste your social media link..."
+      >
+    </div>
+
+    <button class="main-button" onclick="getMedia()">
       Get Media ✨
     </button>
 
     <div id="result">
+
       <h3 id="resultTitle"></h3>
+
       <p id="resultMessage"></p>
+
       <div id="mediaLinks"></div>
+
     </div>
 
     <div class="platforms">
-      <strong>Supported platforms</strong>
+
+      <div class="platform-title">
+        Supported platforms
+      </div>
 
       <div class="platform-grid">
+
         <div class="platform">TikTok</div>
         <div class="platform">Instagram</div>
         <div class="platform">Facebook</div>
         <div class="platform">X</div>
         <div class="platform">Snapchat</div>
         <div class="platform">RedNote</div>
+
       </div>
+
     </div>
+
+    <p class="tagline">
+      ✨ Your content. Your moment. Your Vistara.
+    </p>
 
     <p class="note">
       Only download public media you have permission to use.
     </p>
 
   </section>
-
-  <p class="tagline">
-    Made for creators, dancers &amp; everyone who loves great content.
-  </p>
 
 </main>
 
@@ -282,6 +531,7 @@
 
 <script>
   async function getMedia() {
+
     const input = document.getElementById("mediaUrl");
     const url = input.value.trim();
 
@@ -296,24 +546,34 @@
     const links = document.getElementById("mediaLinks");
 
     result.style.display = "block";
+
     title.textContent = "Processing...";
     message.textContent = "Getting available media...";
     links.innerHTML = "";
 
     try {
+
       const response = await fetch("/api/download", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ url: url })
+
+        body: JSON.stringify({
+          url: url
+        })
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+
         title.textContent = "Download unavailable";
-        message.textContent = data.error || "Something went wrong.";
+
+        message.textContent =
+          data.error || "Something went wrong.";
+
         return;
       }
 
@@ -324,31 +584,45 @@
         "Media is ready.";
 
       if (data.medias && data.medias.length > 0) {
+
         data.medias.forEach((media, index) => {
+
           const link = document.createElement("a");
 
           link.className = "media-link";
+
           link.href = media.url;
+
           link.target = "_blank";
+
           link.rel = "noopener";
 
           link.textContent =
             "Download " +
-            (media.quality ||
-             media.type ||
-             ("Media " + (index + 1)));
+            (
+              media.quality ||
+              media.type ||
+              ("Media " + (index + 1))
+            );
 
           links.appendChild(link);
+
         });
+
       } else {
+
         message.textContent =
           "No downloadable media was returned.";
+
       }
 
     } catch (error) {
+
       title.textContent = "Connection error";
+
       message.textContent =
         "Could not connect to the download service.";
+
     }
   }
 </script>
